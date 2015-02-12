@@ -7,22 +7,22 @@ import printer_gs, textwrap
 p=printer_gs.ThermalPrinter(serialport="/dev/ttyAMA0")
 
 def printChunkDoubleSize(ch):
-	p.double_width(True)
-	#p.double_height(True)
+    p.double_width(True)
+    #p.double_height(True)
     p.set_linespacing(35)
-	#print item
+    #print item
     unwrapped = ch
     wrapped = textwrap.fill(unwrapped, 16)
     p.print_text(wrapped)
     p.print_text("\n")
-	p.double_width(False)
-	#p.double_height(False)
-	p.reset_linespacing()
-	p.print_text("\n\n\n\n\n\n\n")
-        p.print_text("--------------------------------\n")
-        p.print_text("\n\n")
-        p.linefeed()
-        p.linefeed()
+    p.double_width(False)
+    #p.double_height(False)
+    p.reset_linespacing()
+    p.print_text("\n\n\n\n\n\n\n")
+    p.print_text("--------------------------------\n")
+    p.print_text("\n\n")
+    p.linefeed()
+    p.linefeed()
 
 def on_message(ws, message):
     msg = json.loads(message)
