@@ -9,13 +9,12 @@ p=printer_gs.ThermalPrinter(serialport="/dev/ttyAMA0")
 def printChunkDoubleSize(ch):
 	p.double_width(True)
 	#p.double_height(True)
-        p.set_linespacing(35)
-	for item in ch:
-                #print item
-                unwrapped = item
-                wrapped = textwrap.fill(unwrapped, 16)
-                p.print_text(wrapped)
-                p.print_text("\n")
+    p.set_linespacing(35)
+	#print item
+    unwrapped = ch
+    wrapped = textwrap.fill(unwrapped, 16)
+    p.print_text(wrapped)
+    p.print_text("\n")
 	p.double_width(False)
 	#p.double_height(False)
 	p.reset_linespacing()
@@ -33,7 +32,7 @@ def on_message(ws, message):
     if msg["type"] == "display":
         print msg["data"]["text"]
         p.print_text("--------------------------------\n")
-        printChunkDoubleSize(msg["data"]["text"])
+        printChunkDoubleSize([msg["data"]["text"]])
 
 
 def on_error(ws, error):
