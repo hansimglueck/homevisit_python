@@ -18,7 +18,7 @@ stop_timer_hold = 0
 stop_proc = 0
 
 # for music playing
-music = None
+music = 0
 
 # save my process ID
 procID = os.getpid()
@@ -106,16 +106,20 @@ def printChunkTiny(ch):
 	p.linefeed()
         p.linefeed()
 
+def sendGo():
+	print("GO GO GO")
+
 textfile = open("print_02_12.txt", "r")
 
 while not stop_proc:
         if ( GPIO.input(23) == False):
                 if (not white_pressed):
+			sendGo()
 			if (music):
-				print("Musik beenden")
+				#print("Musik beenden")
 				#os.system('pkill mpg321')
-				os.system('sudo sh $HOME/pifmplay/pifmplay stop')
-				music = None
+				os.system('sudo sh pifmplay/pifmplay stop')
+				music = 0
 			chunk = getChunk(textfile)
 			if (chunk[0] == "***ENDE***"):
 				p.print_text("* * * * T H E * E N D * * * *\n")
@@ -126,8 +130,9 @@ while not stop_proc:
 			elif (chunk[0] == "***SOUND***\n"):
 				#os.system('mpg321 ' + chunk[1].strip("\n") + ' &')
                                 #music = os.popen('mpg321 ' + chunk[1].strip("\n") + ' &')
-				print('sudo sh $HOME/pifmplay/pifmplay \"' + chunk[1].strip("\n") + '\" &>/dev/null &')
-				os.system('sudo sh $HOME/pifmplay/pifmplay \"' + chunk[1].strip("\n") + '\" &>/dev/null &')
+				#print('sudo sh pifmplay/pifmplay ' + chunk[1].strip("\n") + ' 100.5 &>/dev/null &')
+				os.system('sudo sh pifmplay/pifmplay ' + chunk[1].strip("\n") + ' 100.5 &>/dev/null &')
+				music = 1
 				if (len(chunk) > 2):
                                         chunk.pop(0)
                                         chunk.pop(0)
