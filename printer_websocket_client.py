@@ -32,7 +32,7 @@ def on_message(ws, message):
     if msg["type"] == "display":
         print msg["data"]["text"]
         p.print_text("--------------------------------\n")
-        printChunkDoubleSize([msg["data"]["text"]])
+        printChunkDoubleSize(msg["data"]["text"])
 
 
 def on_error(ws, error):
