@@ -2,6 +2,7 @@
 import time
 import os
 import RPi.GPIO as GPIO
+import ws
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(23, GPIO.IN)
@@ -15,12 +16,17 @@ stop_proc = 0
 
 def sendGo():
 	print("GO GO GO")
+	client.send(type="playbackAction", data="go")
 
 def sendShutDown():
 	print("System ausschalten!")
         #p.print_text("G O N N A * S L E E P * N O W\n")
         #p.print_text("* * * * * * B Y E * * * * * *\n")
         #p.print_text("-----------------------------\n")
+
+#der client wird in einem extra-thread gestartet...
+client = ws.Client(role="button")
+
 
 while not stop_proc:
         if ( GPIO.input(23) == False):
