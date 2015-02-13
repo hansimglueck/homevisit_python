@@ -27,8 +27,7 @@ def test(x):
 	print x
 
 #der client wird in einem extra-thread gestartet...
-client = ws.Client(role="printer", cb = test)
-#client = ws.Client(role="printer", cb = printChunkDoubleSize)
+client = ws.Client(role="printer", cb = printChunkDoubleSize)
 
 
 #damit das programm nicht stoppt
