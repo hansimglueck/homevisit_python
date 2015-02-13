@@ -24,6 +24,9 @@ def sendShutDown():
         #p.print_text("* * * * * * B Y E * * * * * *\n")
         #p.print_text("-----------------------------\n")
 
+def cb()::
+	print"auch der button kann was empfangen!?"
+	
 #der client wird in einem extra-thread gestartet...
 client = ws.Client(role="button")
 
