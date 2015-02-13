@@ -28,7 +28,7 @@ def cb():
 	print"auch der button kann was empfangen!?"
 	
 #der client wird in einem extra-thread gestartet...
-client = ws.Client(role="button")
+client = ws.Client(role="button", cb=cb)
 
 
 while not stop_proc:
