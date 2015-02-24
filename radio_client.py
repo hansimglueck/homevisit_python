@@ -3,7 +3,7 @@ import os
 radio_frequency = 100.5
 
 def playSoundfile(filename):
-	if filename == "stop"
+	if filename == "stop":
 		stopSound()
 		return
 	os.system('sudo sh pifmplay/pifmplay ' + filename + ' ' + str(radio_frequency) + ' &>/dev/null &')

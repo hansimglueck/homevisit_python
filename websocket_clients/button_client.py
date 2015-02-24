@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #from time import sleep
 import time
 import os
@@ -15,6 +16,9 @@ stop_timer_hold = 0
 stop_proc = 0
 
 def sendGo():
+	if not client.conn():
+		print("NO GO")
+		return
 	print("GO GO GO")
 	client.send(type="playbackAction", data="go")
 
@@ -30,6 +34,7 @@ def cb():
 #der client wird in einem extra-thread gestartet...
 client = ws.Client(role="button", cb=cb)
 
+#time.sleep(45)
 
 while not stop_proc:
         if ( GPIO.input(23) == False):

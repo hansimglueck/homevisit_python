@@ -6,6 +6,7 @@ import json
 class Client(object):
 	
 	def __init__(self, role, cb):
+		self.connected = False
 		self.cb = cb
 		self.role = role
 		websocket.enableTrace(True)
@@ -24,11 +25,13 @@ class Client(object):
 	    print error
 
 	def on_close(self, ws):
+		self.connected = False
 		print "### closed ###"
 		time.sleep(1)
 		self.open_websocket()
 
 	def on_open(self, ws):
+		self.connected = True
 		self.ws.send(json.dumps({'type':"register", 'data':self.role}))
 		
 	def open_websocket(self):
@@ -46,4 +49,5 @@ class Client(object):
 		print "send send"
 		self.ws.send(json.dumps({'type':type, 'data':data}))
 
-
+	def conn(self):
+		return self.connected

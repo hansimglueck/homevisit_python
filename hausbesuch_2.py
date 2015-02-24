@@ -3,7 +3,6 @@ import time
 import os
 import RPi.GPIO as GPIO
 import printer_gs, textwrap
-import Image, ImageDraw
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(23, GPIO.IN)

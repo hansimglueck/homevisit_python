@@ -1,3 +1,9 @@
+Umlauttest:
+- a
+- ä
+- ß
+-und so
+
 Read this aloud to the others: Now as soon as I come to the words "next Please" in capital letters, I will push the yellow button, pass the printer to the next person and he/she will read and execute the next instruction. press NEXT PLEASE.
 
 Ask where the 15 pins are.
