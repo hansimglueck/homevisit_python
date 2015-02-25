@@ -4,9 +4,15 @@ import time
 import os
 import RPi.GPIO as GPIO
 import ws
+import sys
+
+cmdargs = str(sys.argv)
+
+gpio_nr = int(sys.argv[1])
+sending_param = str(sys.argv[2])
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(23, GPIO.IN)
+GPIO.setup(gpio_nr, GPIO.IN)
 
 btn_pressed = 0
 
@@ -20,7 +26,7 @@ def sendGo():
 		print("NO GO")
 		return
 	print("GO GO GO")
-	client.send(type="playbackAction", data="go")
+	client.send(type="playbackAction", data="go", param=sending_param)
 
 def sendShutDown():
 	print("System ausschalten!")
@@ -37,7 +43,7 @@ client = ws.Client(role="button", cb=cb)
 #time.sleep(45)
 
 while not stop_proc:
-        if ( GPIO.input(23) == False):
+        if ( GPIO.input(gpio_nr) == False):
 		if (not btn_pressed):
 			### if the button has been pressed
 			sendGo()
@@ -50,7 +56,7 @@ while not stop_proc:
                         stop_timer_hold = time.time() - stop_timer
                         if (stop_timer_hold > 5 and not stop_proc):
                                 stop_proc = 1
-        if (GPIO.input(23) == True):
+        if (GPIO.input(gpio_nr) == True):
 		### button is not pressed
                 btn_pressed = 0
 

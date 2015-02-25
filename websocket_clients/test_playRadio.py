@@ -1,3 +1,3 @@
-import radio_client
+import radio_fm_client
 
-radio_client.playSoundfile("/home/pi/homevisit_python/european-anthem.mp3")
+radio_fm_client.playSoundfile("/home/pi/homevisit_python/european-anthem.mp3")
