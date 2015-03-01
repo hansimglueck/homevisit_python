@@ -64,4 +64,4 @@ client = ws.Client(role="printer", cb = printChunkDoubleSize)
 #damit das programm nicht stoppt
 #c = raw_input("Client running.")
 while True:
-	pass
+	time.sleep(1)

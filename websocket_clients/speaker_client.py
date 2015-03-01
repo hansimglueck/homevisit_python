@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import time
 import os
 import ws
 import logging
@@ -21,5 +22,5 @@ client = ws.Client(role="speaker", cb = playSoundfile)
 #damit das programm nicht stoppt
 #c = raw_input("Client running.")
 while True:
-	a = 1
+	time.sleep(1)
 
