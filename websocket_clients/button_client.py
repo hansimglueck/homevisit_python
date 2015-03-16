@@ -5,6 +5,9 @@ import os
 import RPi.GPIO as GPIO
 import ws
 import sys
+import logging
+
+logging.basicConfig(filename='button_client.log',level=logging.DEBUG)
 
 cmdargs = str(sys.argv)
 
@@ -25,6 +28,7 @@ def sendGo():
 	if not client.conn():
 		print("NO GO")
 		return
+	logging.info("Go")
 	print("GO GO GO")
 	client.send(type="playbackAction", data="go", param=sending_param)
 
@@ -50,6 +54,7 @@ while not stop_proc:
                         stop_timer = time.time()
                         stop_timer_hold = 0
                         btn_pressed = 1
+			time.sleep(1.5);
                 else:
 			### if the button is being pressed down longer
                         #print(stop_timer_hold)

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import ws
+import time
 
 radio_frequency = 100.5
 
@@ -21,5 +22,5 @@ client = ws.Client(role="radio", cb = playSoundfile)
 #damit das programm nicht stoppt
 c = raw_input("Client running.")
 while 1:
-	a = 1
+	time.sleep(1)
 

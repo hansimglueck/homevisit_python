@@ -1,8 +1,9 @@
 #!/usr/bin/env python
+import time
 import os
 import ws
 import logging
-logging.basicConfig(filename='radio_client.log',level=logging.DEBUG)
+logging.basicConfig(filename='speaker_client.log',level=logging.DEBUG)
 
 def playSoundfile(filename):
 	print filename
@@ -21,5 +22,5 @@ client = ws.Client(role="speaker", cb = playSoundfile)
 #damit das programm nicht stoppt
 #c = raw_input("Client running.")
 while True:
-	a = 1
+	time.sleep(1)
 
