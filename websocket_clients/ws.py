@@ -23,9 +23,10 @@ class Client(object):
 		msg = json.loads(message)
 		#print msg["type"]
 		if msg["type"] == "registerConfirm": logging.info("registered at the game")
-		if msg["type"] == "display":
+		self.cb(msg)
+		#if msg["type"] == "display":
 			#print msg["data"]["text"]
-			self.cb(msg["data"]["text"])
+			#self.cb(msg["data"]["text"])
 	
 	def on_error(self, ws, error):
 	    print error

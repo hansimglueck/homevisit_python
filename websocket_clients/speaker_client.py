@@ -5,7 +5,10 @@ import ws
 import logging
 logging.basicConfig(filename='speaker_client.log',level=logging.DEBUG)
 
-def playSoundfile(filename):
+def playSoundfile(msg):
+        if msg["type"] != "display":
+                return
+        filename = msg["data"]["text"] 
 	print filename
 	if filename == "stop":
 		stopSound()

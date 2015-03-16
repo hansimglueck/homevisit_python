@@ -5,8 +5,10 @@ import time
 
 radio_frequency = 100.5
 
-def playSoundfile(filename):
-	print filename
+def playSoundfile(msg):
+        if msg["type"] != "display":
+                return;
+        filename = msg["data"]["text"]
 	if filename == "stop":
 		stopSound()
 		return

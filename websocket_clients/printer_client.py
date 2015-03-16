@@ -10,7 +10,10 @@ logging.basicConfig(filename='printer_client.log',level=logging.DEBUG)
 
 p=printer_gs.ThermalPrinter(serialport="/dev/ttyAMA0")
 
-def printChunkDoubleSize(txt):
+def printChunkDoubleSize(msg):
+        if msg["type"] != "display":
+		return
+        txt = msg["data"]["text"]
 	unicode = txt.encode('utf-8')
 	#if (txt.startswith('***PICTURE***')):
 		#lineBreaksNum = txt.count('\n')
