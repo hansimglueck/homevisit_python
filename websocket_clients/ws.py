@@ -6,11 +6,15 @@ import logging
 
 class Client(object):
 	
-	def __init__(self, role, cb):
+	def __init__(self, role, cb, name=None):
 		logging.info("Client:init")
 		self.connected = False
 		self.cb = cb
 		self.role = role
+		if name is None:
+			self.name = "NN"
+		else:
+			self.name = name
 		websocket.enableTrace(True)
 		self.open_websocket()
 		
@@ -19,9 +23,10 @@ class Client(object):
 		msg = json.loads(message)
 		#print msg["type"]
 		if msg["type"] == "registerConfirm": logging.info("registered at the game")
-		if msg["type"] == "display":
+		self.cb(msg)
+		#if msg["type"] == "display":
 			#print msg["data"]["text"]
-			self.cb(msg["data"]["text"])
+			#self.cb(msg["data"]["text"])
 	
 	def on_error(self, ws, error):
 	    print error
@@ -36,7 +41,7 @@ class Client(object):
 	def on_open(self, ws):
 		logging.info("Socket opened")
 		self.connected = True
-		self.ws.send(json.dumps({'type':"register", 'data':self.role}))
+		self.ws.send(json.dumps({'type':"register", 'data':{'role': self.role, 'name':self.name}}))
 		
 	def open_websocket(self):
 		def run(* args):
