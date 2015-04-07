@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python 
 #coding=utf-8
 
 import serial, time
@@ -80,8 +80,7 @@ class ThermalPrinter(object):
     # blank page may occur. The more heating interval, the more
     # clear, but the slower printing speed.
     
-    #def __init__(self, heatTime=80, heatInterval=2, heatingDots=7, serialport=SERIALPORT):
-    def __init__(self, heatTime=110, heatInterval=2, heatingDots=7, serialport=SERIALPORT):
+    def __init__(self, heatTime=80, heatInterval=2, heatingDots=7, serialport=SERIALPORT):
         self.printer = serial.Serial(serialport, self.BAUDRATE, timeout=self.TIMEOUT)
         self.printer.write(self._ESC) # ESC - command
         self.printer.write(chr(64)) # @   - initialize
@@ -101,7 +100,6 @@ class ThermalPrinter(object):
         self.printer.write(chr(18))
         self.printer.write(chr(35))
         self.printer.write(chr((printDensity << 4) | printBreakTime))
-
 
     def reset(self):
         self.printer.write(self._ESC)
@@ -263,7 +261,6 @@ class ThermalPrinter(object):
         second character denotes justification (l=left, c=centre, r=right)
         third character must be a space, followed by the text of the line.
         """
-
         lines = markup.splitlines(True)
         for l in lines:
             style = l[0]
@@ -334,7 +331,7 @@ class ThermalPrinter(object):
         return black_and_white_pixels
 
 
-    def print_bitmap(self, pixels, w, h, filename, output_png=False):
+    def print_bitmap(self, pixels, w, h, output_png=False):
         """ Best to use images that have a pixel width of 384 as this corresponds
             to the printer row width. 
             
@@ -387,7 +384,7 @@ class ThermalPrinter(object):
         # output the array all at once to the printer
         # might be better to send while printing when dealing with 
         # very large arrays...
-	with open(filename, 'wb') as f:
+	with open('wiener_kongress_data', 'wb') as f:
 		pickle.dump(print_bytes, f)
 	print "Data saved into file"	
 

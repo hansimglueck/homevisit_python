@@ -3,7 +3,7 @@ import time
 import os
 import ws
 import logging
-logging.basicConfig(filename='speaker_client.log',level=logging.DEBUG)
+logging.basicConfig(filename='/speaker_client.log',level=logging.DEBUG)
 
 def playSoundfile(msg):
         if msg["type"] != "display":
@@ -13,10 +13,20 @@ def playSoundfile(msg):
 	if filename == "stop":
 		stopSound()
 		return
-	os.popen('mpg321 ' + filename + ' &')	
+	elif filename == "stopmpg321":
+		stopmpg321()
+		return
+	elif filename.startswith( 'mpg321 ' ):
+		filename = filename[7:];
+		os.popen('mpg321 ' + filename + ' &')
+	else:
+		os.popen('omxplayer ' + filename + ' &')
 
 def stopSound():
-	os.system('pkill mpg321')
+	os.system("sudo pkill omxplayer");
+
+def stopmpg321():
+        os.system('pkill mpg321')
 
 #der client wird in einem extra-thread gestartet...
 client = ws.Client(role="speaker", cb = playSoundfile)
