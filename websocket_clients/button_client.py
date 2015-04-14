@@ -7,7 +7,7 @@ import ws
 import sys
 import logging
 
-logging.basicConfig(filename='/button_client.log',level=logging.DEBUG)
+logging.basicConfig(filename='/button_client.log',level=logging.INFO)
 	
 cmdargs = str(sys.argv)
 
@@ -41,7 +41,7 @@ def sendGo():
 	print("GO GO GO")
 	client.send(type="playbackAction", data="go", param=sending_param)
 	os.popen('mpg321 /home/pi/medien/sounds/button-11.mp3 &')
-	#client.send(type="forward", data={"type":"display","content":{"text":"mpg321 /home/pi/medien/sounds/button-11.mp3"}}, param={"role":"speaker","name":"NN"})
+	#client.send(type="forward", data={"type":"display","content":{"text":"mpg321 button-11.mp3"}}, param={"role":"speaker","name":"NN"})
 	#client.send(type="forward", data={"type":"display","content":{"command":"countdown","param":10}}, param={"role":"digits","name":"NN"})
 
 def sendShutDown():
@@ -54,24 +54,28 @@ def cb(msg):
 	global led_state
 	try:
 		logging.info("button cb got message")
+		print(msg["type"])
 		#logging.info("type="+msg["type"]+" - command="+msg["data"]["command"])
 		if (msg["type"] == "display"):
-			cmd = msg["data"]["command"]
+			cmd = msg["data"]["type"]
 			#print(cmd)
-			if (cmd == "on"):
-				turnLED_on()
-			elif (cmd == "off"):
-				turnLED_off()
-			elif (cmd == "blink"):
-				blink(msg["data"]["param"])
-			elif (cmd == "alarm"):
-				if (led_state == 0):
+			#if (cmd == "on"):
+			#	turnLED_on()
+			#elif (cmd == "off"):
+			#	turnLED_off()
+			#elif (cmd == "blink"):
+			#	blink(msg["data"]["param"])
+			if (cmd == "alert"):
+				al_state = msg["data"]["param"]
+				if (al_state == 1):
 					turnLED_on()
 					#blink(msg["data"]["param"])
-				elif (led_state == 1):
-					blink(msg["data"]["param"])
-				elif (led_state == 2):
+				elif (al_state == 2):
+					blink(0.3)
+				elif (al_state == 0):
 					turnLED_off()
+			#if (cmd == "off"):
+			#	turnLED_off()
 	finally:
 		print("button cb got message")
 			
@@ -93,7 +97,7 @@ def turnLED_off():
 	
 def turnLED_on():
 	global led_state
-        global blink_toggle
+	global blink_toggle
 	#print("LED ON")
 	led_state = 1
 	#print(led_state)
@@ -103,7 +107,7 @@ def turnLED_on():
 	
 def blink(freq):
 	global led_state
-        global blink_toggle
+	global blink_toggle
 	global blink_freq
 	global blink_toggle_timer
 	#print("LED BLINK")
@@ -120,16 +124,16 @@ def blink(freq):
 def lightOn():
 	global sending_param
 	GPIO.output(gpio_led_nr, GPIO.HIGH)
-	if(sending_param == "0"):
-		client.send(type="forward", data={"type":"display","content":{"command":"blink_on","param":0}}, param={"role":"digits","name":"NN"})
-		#print("SEND ON TO DIGITS")
+	#if(sending_param == "0"):
+	#	client.send(type="forward", data={"type":"display","content":{"command":"blink_on","param":0}}, param={"role":"digits","name":"NN"})
+	#	print("SEND ON TO DIGITS")
 
 def lightOff():
 	global sending_param
 	GPIO.output(gpio_led_nr, GPIO.LOW)
-	if(sending_param == "0"):
-                client.send(type="forward", data={"type":"display","content":{"command":"blink_off","param":0}}, param={"role":"digits","name":"NN"})
-		#print("SEND OFF TO DIGITS")
+	#if(sending_param == "0"):
+	#	client.send(type="forward", data={"type":"display","content":{"command":"blink_off","param":0}}, param={"role":"digits","name":"NN"})
+	#	print("SEND OFF TO DIGITS")
 
 try:
 
@@ -147,7 +151,7 @@ else:
 			if (not btn_pressed):
 				### if the button has been pressed
 				sendGo()
-				turnLED_off()
+				#turnLED_off()
 				stop_timer = time.time()
 				stop_timer_hold = 0
 				btn_pressed = 1

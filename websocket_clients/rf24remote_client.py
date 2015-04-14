@@ -31,13 +31,16 @@ radio.startListening()
 
 def cb(msg):
 	if (msg["type"] == "display"):
-		cmd = msg["data"]["command"]
+		cmd = msg["data"]["type"]
 		#print(cmd)
 		if (cmd == "on"):
 			print(" ")
 
 #der client wird in einem extra-thread gestartet...
 client = ws.Client(role="remote", cb = cb)
+
+def sendAlert():
+	client.send(type="alert")
 
 def sendGo(nr_string):
 	### nr_string is "0" for main button (green), is "1" for second button (red)
@@ -73,4 +76,5 @@ while True:
 			# Spew it
 			#print 'Got payload size=', len, ' value="', receive_payload, '"'
 			#sendAlarmGreen()
-			sendAlarmBoth()
+			#sendAlarmBoth()
+			sendAlert()

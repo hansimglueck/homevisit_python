@@ -6,10 +6,10 @@ import logging
 logging.basicConfig(filename='/speaker_client.log',level=logging.DEBUG)
 
 def playSoundfile(msg):
-        if msg["type"] != "display":
-                return
-        filename = msg["data"]["text"] 
-	print filename
+	if msg["type"] != "display":
+		return
+	filename = msg["data"]["text"] 
+	print(filename)
 	if filename == "stop":
 		stopSound()
 		return
@@ -17,10 +17,10 @@ def playSoundfile(msg):
 		stopmpg321()
 		return
 	elif filename.startswith( 'mpg321 ' ):
-		filename = filename[7:];
-		os.popen('mpg321 ' + filename + ' &')
+		filename = filename[7:]
+		os.popen('mpg321 /home/pi/medien/sounds/' + filename + ' &')
 	else:
-		os.popen('omxplayer ' + filename + ' &')
+		os.popen('omxplayer /home/pi/medien/sounds/' + filename + ' &')
 
 def stopSound():
 	os.system("sudo pkill omxplayer");

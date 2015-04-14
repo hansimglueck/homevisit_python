@@ -19,7 +19,8 @@ class Client(object):
 		self.open_websocket()
 		
 	def on_message(self, ws, message):
-		#print message
+		logging.info("WS-message:")
+		logging.info(message)
 		msg = json.loads(message)
 		#print msg["type"]
 		if msg["type"] == "registerConfirm": logging.info("registered at the game")
@@ -51,11 +52,12 @@ class Client(object):
 		                          on_close = self.on_close)
 			self.ws.on_open = self.on_open
 			self.ws.run_forever()
-			print "konnte keine verbindung aufbauen"
+			logging.info("konnte keine verbindung aufbauen")
 		thread.start_new_thread(run, ())
 
-	def send(self, type, data, param):
-		print "send send"
+	def send(self, type, data=None, param=None):
+		logging.info("send type:" + type)
+		#logging.info("send type: " + type + " data: " + data + " param: " + param)
 		self.ws.send(json.dumps({'type':type, 'data':data, 'param':param}))
 
 	def conn(self):
